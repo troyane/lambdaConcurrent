@@ -1,3 +1,8 @@
+/*-------------------------------------------------
+|  Author: Gerasymchuk Nazar
+|  neval8.wordpress.com
+\------------------------------------------------*/
+
 #ifndef DAO_H
 #define DAO_H
 
@@ -13,6 +18,8 @@ class DAO : public QObject
     QString mQuery;
 public:
     DAO(QObject *parent = 0);
+
+    bool eventFilter(QObject *obj, QEvent *ev);  // to drop user input
 
     void applyQuery(QString query, func freeze, func unfreeze);
 };
