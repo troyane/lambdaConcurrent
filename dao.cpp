@@ -14,13 +14,12 @@ DAO::DAO(QObject *parent) :
 {
 }
 
-
 // EventFilter to block all user input
 bool DAO::eventFilter(QObject *obj, QEvent *ev)
 {
-    // not block message boxes
+    // do not block message boxes
     if ( obj->isWidgetType() ) {
-        QWidget* w = qobject_cast<QWidget*>(obj);
+        const QWidget* w = qobject_cast<QWidget*>(obj);
         if ( w ) {
             if ( qobject_cast<QMessageBox*>(w->window()) ) {
                 return false;
@@ -66,7 +65,7 @@ bool DAO::eventFilter(QObject *obj, QEvent *ev)
 
 void DAO::applyQuery(QString query, func freeze, func unfreeze)
 {
-    // event filter to block user input
+    // own event filter to block user input
     // to avoid deadlocks
     qApp->installEventFilter(this);
 
@@ -90,7 +89,9 @@ void DAO::applyQuery(QString query, func freeze, func unfreeze)
     while (f.isRunning())
     {
         SleeperThread::msSleep(50);
-//        qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+        // QEventLoop::ExcludeUserInputEvents -- if we have no own event filter
+        //  so all events Qt'll handle after this while
+        qApp->processEvents(QEventLoop::AllEvents);
         time += 50;
         if (!overtime)
             if ( time > LONG_OPERATION_TIME)
