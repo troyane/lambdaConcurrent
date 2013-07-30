@@ -19,7 +19,6 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-    ThreadDAO td;
 
     void setGuiEnabled(bool enabled);
 
@@ -34,6 +33,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QProgressIndicator* pi;
+    ThreadDAO td;
 };
 
 #endif // MAINWINDOW_H

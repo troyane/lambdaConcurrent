@@ -3,18 +3,20 @@
 
 #include <QThread>
 #include "dao.h"
+#include "QProgressIndicator.h"
 
 class ThreadDAO : public QThread
 {
     Q_OBJECT
 
-    bool haveFunction;
-    bool callFinished;
-    bool stop;
+    bool m_haveFunction;
+    bool m_callFinished;
+    bool m_stop;
 
     func m_lambda;
+    QProgressIndicator& m_progressindicator;
 public:
-    explicit ThreadDAO(QObject *parent = 0);
+    explicit ThreadDAO(QProgressIndicator& progressIndicator, QObject *parent = 0);
     void run();
     void callSync(func lambda);
     void stopThread();
