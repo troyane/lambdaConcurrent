@@ -18,10 +18,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
-
     void setGuiEnabled(bool enabled);
-
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();

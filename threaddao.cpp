@@ -6,6 +6,7 @@
 #include "sleeperthread.h"
 
 const int SleepTimeMs = 10;
+const int TooLong = 100;
 
 ThreadDAO::ThreadDAO(QProgressIndicator &progressIndicator, QObject *parent) :
     QThread(parent),
@@ -26,11 +27,9 @@ void ThreadDAO::run()
         {
             SleeperThread::msSleep(SleepTimeMs);
         }
-        m_callFinished = false
-                ;
-        m_progressindicator.startAnimation();
+        m_callFinished = false;
+
         m_lambda();
-        m_progressindicator.stopAnimation();
 
         m_haveFunction = false;
         m_callFinished = true;
@@ -39,11 +38,27 @@ void ThreadDAO::run()
 
 void ThreadDAO::callSync(func lambda)
 {
-    QEventLoop::ProcessEventsFlags processEventFlags = QEventLoop::AllEvents;
     setLambda(lambda);
+
+    bool animationIsShowed = false;
+    int waitCycles = 0;
+
     while (m_haveFunction && !m_callFinished) {
-        qApp->processEvents( processEventFlags );
+        qApp->processEvents( QEventLoop::AllEvents );
         SleeperThread::msSleep(SleepTimeMs);
+        ++waitCycles;
+        if (waitCycles > TooLong && !animationIsShowed)
+        {
+            qDebug() << "Start animation";
+            m_progressindicator.startAnimation();
+            animationIsShowed = true;
+        }
+    }
+
+    if (animationIsShowed)
+    {
+        qDebug() << "Stop animation";
+        m_progressindicator.stopAnimation();
     }
 }
 
