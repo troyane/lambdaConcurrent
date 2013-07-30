@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QEventLoop>
 #include <QApplication>
+#include <QPushButton>
 
 #include "threaddao.h"
 #include "sleeperthread.h"
@@ -36,7 +37,7 @@ void ThreadDAO::run()
     }
 }
 
-void ThreadDAO::callSync(func lambda)
+void ThreadDAO::callSync(func lambda, QPushButton& btn)
 {
     setLambda(lambda);
 
@@ -50,6 +51,7 @@ void ThreadDAO::callSync(func lambda)
         if (waitCycles > TooLong && !animationIsShowed)
         {
             qDebug() << "Start animation";
+            btn.setEnabled(false);
             m_progressindicator.startAnimation();
             animationIsShowed = true;
         }
@@ -58,6 +60,7 @@ void ThreadDAO::callSync(func lambda)
     if (animationIsShowed)
     {
         qDebug() << "Stop animation";
+        btn.setEnabled(true);
         m_progressindicator.stopAnimation();
     }
 }

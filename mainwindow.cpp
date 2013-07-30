@@ -31,7 +31,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btnSendQuery_clicked()
 {
-    // usaeg of database access
+    // usage of database access
     QString query("SELECT * FROM table1");
     // prepare lambda "how to freeze" and "how to unfreeze"
     // specialized on GUI interaction
@@ -63,8 +63,8 @@ void MainWindow::setGuiEnabled(bool enabled)
 
 void MainWindow::on_pushButton_clicked()
 {
+    qDebug() << "\t in on_pushButton_clicked";
     int intValue = 0;
-    ui->pushButton->setEnabled(false);
 
     td.callSync(
                 // lambda goes here
@@ -79,10 +79,9 @@ void MainWindow::on_pushButton_clicked()
         }
         intValue = 42;
         qDebug() << "\t lambda ends" << temp;
-    }
-                );
+    },
+    *ui->pushButton);
 
-    ui->pushButton->setEnabled(true);
     qDebug() << "After calling lambda: " << intValue;
     ui->pushButton->setText(QString::number(intValue));
 }

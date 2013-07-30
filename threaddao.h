@@ -5,6 +5,8 @@
 #include "dao.h"
 #include "QProgressIndicator.h"
 
+class QPushButton;
+
 class ThreadDAO : public QThread
 {
     Q_OBJECT
@@ -18,11 +20,10 @@ class ThreadDAO : public QThread
 public:
     explicit ThreadDAO(QProgressIndicator& progressIndicator, QObject *parent = 0);
     void run();
-    void callSync(func lambda);
+    void callSync(func lambda, QPushButton &btn);
     void stopThread();
 
     void setLambda(func lambda);
-
     
 signals:
 //    void done();
