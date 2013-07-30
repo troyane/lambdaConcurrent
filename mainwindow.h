@@ -29,7 +29,6 @@ public:
     
 private slots:
     void on_btnSendQuery_clicked();
-
     void on_pushButton_clicked();
 
 private:

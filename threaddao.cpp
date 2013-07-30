@@ -1,4 +1,6 @@
 #include <QDebug>
+#include <QEventLoop>
+#include <QApplication>
 
 #include "threaddao.h"
 #include "sleeperthread.h"
@@ -26,6 +28,16 @@ void ThreadDAO::run()
 
         haveFunction = false;
         callFinished = true;
+    }
+}
+
+void ThreadDAO::callSync(func lambda)
+{
+    QEventLoop::ProcessEventsFlags processEventFlags = QEventLoop::AllEvents;
+    setLambda(lambda);
+    while (haveFunction && !callFinished) {
+        qApp->processEvents( processEventFlags );
+        SleeperThread::msSleep(10);
     }
 }
 

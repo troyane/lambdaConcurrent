@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QVBoxLayout* vbl = new QVBoxLayout(ui->pushButton);
     vbl->addWidget(pi, 0, Qt::AlignCenter);
 
-
     td.start();
 }
 
@@ -64,13 +63,14 @@ void MainWindow::setGuiEnabled(bool enabled)
 void MainWindow::on_pushButton_clicked()
 {
     int intValue = 0;
-    td.setLambda(
+    ui->pushButton->setEnabled(false);
+    pi->startAnimation();
+
+    td.callSync(
                 // lambda goes here
                 [this, &intValue] (void)
     {
         qDebug() << "\t in lambda";
-        pi->startAnimation();
-        ui->pushButton->setEnabled(false);
         QString temp;
         for (int i=1; i<300; ++i)
         {
@@ -79,10 +79,11 @@ void MainWindow::on_pushButton_clicked()
         }
         intValue = 42;
         qDebug() << "\t lambda ends" << temp;
-        pi->stopAnimation();
-        ui->pushButton->setEnabled(true);
     }
                 );
+
+    pi->stopAnimation();
+    ui->pushButton->setEnabled(true);
     qDebug() << "After calling lambda: " << intValue;
     ui->pushButton->setText(QString::number(intValue));
 }

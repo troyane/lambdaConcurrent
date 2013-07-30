@@ -16,9 +16,11 @@ class ThreadDAO : public QThread
 public:
     explicit ThreadDAO(QObject *parent = 0);
     void run();
+    void callSync(func lambda);
     void stopThread();
 
     void setLambda(func lambda);
+
     
 signals:
 //    void done();
