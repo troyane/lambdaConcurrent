@@ -8,6 +8,9 @@
 
 #include <QMainWindow>
 
+#include "threaddao.h"
+#include "QProgressIndicator.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -15,6 +18,9 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+    ThreadDAO td;
+
     void setGuiEnabled(bool enabled);
 
 public:
@@ -24,8 +30,11 @@ public:
 private slots:
     void on_btnSendQuery_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QProgressIndicator* pi;
 };
 
 #endif // MAINWINDOW_H

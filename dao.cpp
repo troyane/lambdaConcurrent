@@ -6,8 +6,7 @@
 #include "sleeperthread.h"
 #include <QMessageBox>
 
-// limit time when do we need to show message (in ms)
-const unsigned long int LONG_OPERATION_TIME = 2000;
+const int LONG_OPERATION_TIME = 2000;
 
 DAO::DAO(QObject *parent) :
     QObject(parent)
@@ -113,3 +112,4 @@ void DAO::applyQuery(QString query, func freeze, func unfreeze)
     //
     qApp->removeEventFilter(this);
 }
+

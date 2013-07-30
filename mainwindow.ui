@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>297</width>
-    <height>142</height>
+    <width>362</width>
+    <height>177</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,6 +29,13 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>test ThreadDAO</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -36,8 +43,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>297</width>
-     <height>22</height>
+     <width>362</width>
+     <height>24</height>
     </rect>
    </property>
   </widget>

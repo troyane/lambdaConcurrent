@@ -1,8 +1,11 @@
+#include <QDebug>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "dao.h"
-
-#include <QDebug>
+#include "threaddao.h"
+#include "sleeperthread.h"
+#include "QProgressIndicator.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -10,12 +13,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    pi = new QProgressIndicator(this);
+    QVBoxLayout* vbl = new QVBoxLayout(ui->pushButton);
+    vbl->addWidget(pi, 0, Qt::AlignCenter);
+
+
+    td.start();
 }
 
 MainWindow::~MainWindow()
 {
+    td.stopThread();
     delete ui;
 }
+
 
 void MainWindow::on_btnSendQuery_clicked()
 {
@@ -47,4 +59,30 @@ void MainWindow::setGuiEnabled(bool enabled)
     } else {
         ui->lblStatus->setText("Working too long");
     }
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    int intValue = 0;
+    td.setLambda(
+                // lambda goes here
+                [this, &intValue] (void)
+    {
+        qDebug() << "\t in lambda";
+        pi->startAnimation();
+        ui->pushButton->setEnabled(false);
+        QString temp;
+        for (int i=1; i<300; ++i)
+        {
+            temp.append(QString::number(i*i / (i+1), 'f', 1));
+            SleeperThread::msSleep(10);
+        }
+        intValue = 42;
+        qDebug() << "\t lambda ends" << temp;
+        pi->stopAnimation();
+        ui->pushButton->setEnabled(true);
+    }
+                );
+    qDebug() << "After calling lambda: " << intValue;
+    ui->pushButton->setText(QString::number(intValue));
 }

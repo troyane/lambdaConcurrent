@@ -15,11 +15,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     mainwindow.cpp \
-    dao.cpp
+    dao.cpp \
+    threaddao.cpp \
+    QProgressIndicator.cpp
 
 HEADERS  += mainwindow.h \
     dao.h \
-    sleeperthread.h
+    sleeperthread.h \
+    threaddao.h \
+    QProgressIndicator.h
 
 FORMS    += mainwindow.ui
 
