@@ -28,7 +28,7 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 
 # for supporting new standard
-QMAKE_CXXFLAGS += -std=c++0x
+QMAKE_CXXFLAGS += -std=c++11
 
 # for static analisys
 #QMAKE_CXXFLAGS += -isystem "/usr/local/Trolltech/Qt-4.8.4/include"

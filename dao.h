@@ -7,6 +7,7 @@
 #define DAO_H
 
 #include <QObject>
+#include <functional>
 
 // type lambda function
 typedef std::function <void ()> func;
